@@ -126,3 +126,32 @@ Finally, when building the final .jar file, we would like to avoid running the
 local tests, as the Android native libraries won't run on your local machine.
 
     mvn clean install -DskipTests
+    
+**Building for Redhat / Centos**
+
+#!/bin/bash
+
+module load gcc/4.9.4
+module load cmake/3.2.3
+module load java/1.8.0_101
+
+module load cuda/7.5
+
+export CC=`which gcc` export CXX=`which g++`
+echo $CC
+echo $CXX
+
+cmake --version
+cmake ./JOCL
+
+gmake --version
+gmake
+
+ldd JOCL/nativeLibraries/libJOCL_2_0_0-linux-x86_64.so
+
+
+java -version
+
+cd JOCL
+
+path-to-maven/bin/mvn clean install  # -DskipTests
